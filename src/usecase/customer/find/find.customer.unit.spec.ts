@@ -24,11 +24,7 @@ describe("Test find customer use case", () =>{
     it("should find a customer", async() =>{
         const customerRepository = MockRepository();
         const useCase = new FindCustomerUseCase(customerRepository);
-        const customer = new Customer("1","Customer 1");
-        const address = new Address("Street 1", 1, "zipcode 1", "City 1");
-        customer.changeAdrress(address);
-        await customerRepository.create(customer);
-
+      
         const input = {
             id: "1"
         }
@@ -47,5 +43,21 @@ describe("Test find customer use case", () =>{
         const result = await useCase.execute(input);
 
         expect(result).toEqual(output);
-    })
-})
+    });
+
+    it("Should not find customer", async() => {
+        const customerRepository = MockRepository();
+        customerRepository.find.mockImplementation(() =>{
+            throw new Error("Customer not found");
+        });
+        const useCase = new FindCustomerUseCase(customerRepository);
+      
+        const input = {
+            id: "1"
+        }
+        expect(()=>{ 
+            return useCase.execute(input);
+        }).rejects.toThrow("Customer not found");
+
+    });
+});
