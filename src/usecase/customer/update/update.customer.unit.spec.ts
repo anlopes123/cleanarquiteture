@@ -25,3 +25,14 @@ const MockRepository = () =>{
         update: jest.fn(),
     }
 }
+
+describe("Unit test for customer update use case", () =>{
+    it("should update a customer", async()=>{
+        const customerRepository = MockRepository();
+        const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
+
+        const output = await customerUpdateUseCase.execute(input);
+
+        expect(output).toEqual(input);
+    })
+})
