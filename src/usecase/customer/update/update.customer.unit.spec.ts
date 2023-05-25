@@ -1,5 +1,6 @@
 import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value_object/address";
+import UpdateCustomerUseCase from "./update.customer.usecase";
 
 const customer = CustomerFactory.createWithAddress(
     "John",
@@ -34,5 +35,22 @@ describe("Unit test for customer update use case", () =>{
         const output = await customerUpdateUseCase.execute(input);
 
         expect(output).toEqual(input);
-    })
+    });
+
+    it("Should thrown an error when name is missing ", async()=> {
+        const customerRepository = MockRepository();
+        const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
+
+        input.name = "";
+        await expect(customerUpdateUseCase.execute(input)).rejects.toThrow("Name is required");
+    });
+
+    it("Should thrown an error when street is missing ", async()=> {
+        const customerRepository = MockRepository();
+        const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
+        input.name = "Johna update";
+        input.address.street = "";
+
+        await expect(customerUpdateUseCase.execute(input)).rejects.toThrow("Street is required");
+    });
 })
