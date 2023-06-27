@@ -80,5 +80,5 @@ describe("E2E test for product ", () =>{
         expect(response.status).toBe(200);
         expect(response.body.name).toBe("Product updated");
         expect(response.body.price).toBe(50);
-    })
+    });
 })
