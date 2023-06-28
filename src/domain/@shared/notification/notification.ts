@@ -1,13 +1,13 @@
-export type NotificationError = {
+export type NotificationErrorProps = {
     message: string;
     context: string;
 }
 
 
 export default class Notification {
-    private errors: NotificationError[] = [];
+    private errors: NotificationErrorProps[] = [];
 
-    addError(error: NotificationError) {
+    addError(error: NotificationErrorProps) {
         this.errors.push(error);
     }
 
@@ -20,4 +20,14 @@ export default class Notification {
      });
      return message;
     };
+
+    hasErrors(): boolean {
+        return this.errors.length > 0;
+    };
+    getErrors(): NotificationErrorProps[] {
+        return this.errors;
+    }
+    clear(): void {
+        this.errors = [];
+    }
 }

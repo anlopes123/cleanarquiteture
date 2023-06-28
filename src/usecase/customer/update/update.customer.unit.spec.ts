@@ -7,17 +7,6 @@ const customer = CustomerFactory.createWithAddress(
     new Address("Street", 123, "Zip", "City")
 );
 
-const input = {
-    id: customer.id, 
-    name: "John Updated",
-    address: {
-        street: "Street Updated",
-        number: 1234,
-        zip: "Zip Updated",
-        city: "City Updated",
-    },
-}
-
 const MockRepository = () =>{
     return {
         create: jest.fn(), 
@@ -29,6 +18,18 @@ const MockRepository = () =>{
 
 describe("Unit test for customer update use case", () =>{
     it("should update a customer", async()=>{
+    
+        
+        const input = {
+            id: customer.id, 
+            name: "John Updated",
+            address: {
+                street: "Street Updated",
+                number: 1234,
+                zip: "Zip Updated",
+                city: "City Updated",
+            },
+        }
         const customerRepository = MockRepository();
         const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
 
@@ -38,19 +39,39 @@ describe("Unit test for customer update use case", () =>{
     });
 
     it("Should thrown an error when name is missing ", async()=> {
+        
+        const input = {
+            id: customer.id, 
+            name: "",
+            address: {
+                street: "Street Updated",
+                number: 1234,
+                zip: "Zip Updated",
+                city: "City Updated",
+            },
+        }
         const customerRepository = MockRepository();
         const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
-
-        input.name = "";
-        await expect(customerUpdateUseCase.execute(input)).rejects.toThrow("Name is required");
+        
+        await expect(customerUpdateUseCase.execute(input)).rejects.toThrow("customer: Name is required");
+        
     });
 
     it("Should thrown an error when street is missing ", async()=> {
+        customer.clearErrors();        
+
+        const input = {
+            id: customer.id, 
+            name: "John Updated",
+            address: {
+                street: "",
+                number: 1234,
+                zip: "Zip Updated",
+                city: "City Updated",
+            },
+        }
         const customerRepository = MockRepository();
         const customerUpdateUseCase = new UpdateCustomerUseCase(customerRepository);
-        input.name = "Johna update";
-        input.address.street = "";
-
+       
         await expect(customerUpdateUseCase.execute(input)).rejects.toThrow("Street is required");
-    });
-})
+    });})

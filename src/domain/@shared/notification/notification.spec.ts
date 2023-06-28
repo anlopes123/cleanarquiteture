@@ -33,5 +33,28 @@ describe("Unit test for notification", ()=> {
         expect(notification.messages()).toBe("customer: error message,customer: error message2,order: error message3,");
 
     });
+    it("should check if notification has at last on error", ()=>{
+        const notification = new Notification();
+        const error = {
+            message: "error message",
+            context: "customer"
+        }
+
+        notification.addError(error);
+        expect(notification.hasErrors()).toBe(true);
+
+    });
+
+    it("Should get all erros prop", () => {
+        const notification = new Notification();
+        const error = {
+            message: "error message",
+            context: "customer"
+        }
+
+        notification.addError(error);
+        expect(notification.getErrors()).toStrictEqual([error]);
+
+    })
 
 });
