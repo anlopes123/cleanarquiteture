@@ -3,23 +3,23 @@ import Product from "./product";
 describe("Product Unit Test", ()=> {
    
     it("Should throw error When id is empty", ()=>{
-        expect(()=>{
+        expect( () => {
             const product = new Product("", "Product 1", 200);
-        }).toThrowError("Id is required");
+        }).toThrowError("product: Id is required");
         
     });
 
     it("Should throw error When name is empty", ()=>{
         expect(()=>{
             const product = new Product("1", "", 200);
-        }).toThrowError("Name is required");
+        }).toThrowError("product: Name is required");
         
     });
     
     it("Should throw error When price less than zero", ()=>{
         expect(()=>{
            const product = new Product("1", "name", -200);
-        }).toThrowError("Price must be grater than zero");
+        }).toThrowError("product: Price must be grater than zero");
         
     });
 

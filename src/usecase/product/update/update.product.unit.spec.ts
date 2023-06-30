@@ -29,20 +29,22 @@ describe("Unit test for a product update use case", () => {
     });
 
     it("Should thrown an error when name is missing ", async()=> {
+        product.clearErrors();
         const productRepository = MockRepository();
         const productUpdateUseCase = new UpdateProductUseCase(productRepository);
 
         input.name = "";
-        await expect(productUpdateUseCase.execute(input)).rejects.toThrow("Name is required");
+        await expect(productUpdateUseCase.execute(input)).rejects.toThrow("product: Name is required");
     });
 
     it("Should throw erros with product price must be grater than zero", async() =>{
+        product.clearErrors();
         const productRepository = MockRepository();
         const updateProductUseCase = new UpdateProductUseCase(productRepository);
         input.name = "Product 1";
         input.price = -1;
         
-        await expect(updateProductUseCase.execute(input)).rejects.toThrow("Price must be grater than zero");
+        await expect(updateProductUseCase.execute(input)).rejects.toThrow("product: Price must be grater than zero");
     });
 
 

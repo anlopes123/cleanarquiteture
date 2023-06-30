@@ -45,7 +45,7 @@ export default class Product extends Enitity  {
     get price(): number {
         return this._price;
     }
-    validate(): boolean {
+    validate() {
         if(this._id.length ===0) {
             this.notification.addError({
                 context: "product",
@@ -64,7 +64,6 @@ export default class Product extends Enitity  {
                 context: "product",
                 message: "Price must be grater than zero", 
             }); 
-        }
-        return true;
+        }       
     }
 }
