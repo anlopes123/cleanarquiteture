@@ -1,4 +1,7 @@
 
+import { createCipheriv } from "crypto";
+import { customerRoute } from "../../../infraestructure/api/routes/customer.route";
+import NotificationError from "../../@shared/notification/notification.error";
 import Address from "../value_object/address";
 import Customer from "./customer";
 
@@ -12,6 +15,14 @@ describe("Customer Unit test", ()=>{
         expect(() => {
             let customer = new Customer("123", "");
         }).toThrowError("customer: Name is required");
+    });
+
+    it("Should throw error more one erros", () =>{
+        expect(() =>{
+            let customer = new Customer("", "");
+
+        }).toThrowError("customer: Id is required,customer: Name is required");
+
     });
     it("Shoud change name", ()=>{
         const customer = new Customer("123", "John");

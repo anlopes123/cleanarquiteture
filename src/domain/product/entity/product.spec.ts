@@ -23,6 +23,18 @@ describe("Product Unit Test", ()=> {
         
     });
 
+    it("Should thow erros when more the one erros", ()=>{
+        expect(()=>{
+            const product = new Product("", "", 200);
+        }).toThrowError("product: Id is required,product: Name is required");
+
+        // try{
+        //     const product = new Product("", "", 200);
+        // } catch(err) {
+        //     expect(err.message).toBe("product: Id is required,product: Name is required");
+        // }
+    })
+
        
     it("change name", ()=>{
         const product = new Product("1", "name", 200);
