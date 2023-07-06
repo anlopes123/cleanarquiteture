@@ -6,6 +6,7 @@ import CustomerCreatedEvent from "../event/customer-created.event";
 import EnviaConsoleLogHandler from "../event/handler/send-console-log-when-customer-changeAdress.handler";
 import EnviaConsoleLog1Handler from "../event/handler/send-console-log1-when-customer-created.handle";
 import EnviaConsoleLog2Handler from "../event/handler/send-console-log2-when-customer-created.handler";
+import CustomerValidadorFactory from "../factory/customer.validator.factory";
 import Address from "../value_object/address";
 
 
@@ -87,22 +88,9 @@ export default class Customer extends Enitity {
     }
 
     validate() {
-        if(this.id.length == 0 ) {
-            this.notification.addError({
-                context: "customer",
-                message: "Id is required", 
-            });
-            
-        }
-
-        if(this._name.length == 0) {
-            this.notification.addError({
-                context: "customer",
-                message: "Name is required", 
-            });            
-        }
-        
+        CustomerValidadorFactory.create().validate(this);        
     }
+    
     get rewardPoint(): number {
         return this._rewardPoint;
     }
